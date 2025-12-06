@@ -1,0 +1,34 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:graduation_project/auth/login_screen.dart';
+import 'package:graduation_project/auth/register_screen.dart';
+import 'package:graduation_project/ui/WishListScreen.dart';
+import 'package:graduation_project/ui/home.dart';
+import 'package:graduation_project/ui/tabs/category_tab/product_details_screen/onProductDetailsClicked.dart';
+import 'package:graduation_project/ui/tabs/home_tab/CategoryHomeScreen/categories_details.dart';
+import 'package:graduation_project/ui/tabs/home_tab/home_tab.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      initialRoute: HomeScreen.routeName,
+      routes: {
+        LoginScreen.routeName: (context) => LoginScreen(),
+        RegisterScreen.routeName: (context) => RegisterScreen(),
+        HomeTab.routeName:(context)=>HomeTab(),
+        HomeScreen.routeName:(context)=>HomeScreen(),
+        ProductDetails.routeName:(context)=>ProductDetails(),
+        WishListScreen.routeName:(context)=>WishListScreen(),
+        CategoriesDetails.routeName:(context)=>CategoriesDetails(),
+      },
+    );
+  }
+}
