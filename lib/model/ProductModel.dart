@@ -44,6 +44,7 @@ class Product {
     price = json['price'];
     currentStock = json['currentStock'];
     categoryId = json['categoryId'];
+    isFav = json["isFav"];
     // isFav لا نقرأه من JSON
   }
 
@@ -55,7 +56,7 @@ class Product {
   int? currentStock;
   int? categoryId;
 
-  bool isFav = false; // 👈 متغير جديد للواجهة فقط
+  bool isFav = false ; // 👈 متغير جديد للواجهة فقط
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
