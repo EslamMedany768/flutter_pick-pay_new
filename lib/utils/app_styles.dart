@@ -54,6 +54,11 @@ class AppStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.blueDark,
   );
+  static final TextStyle medium16blueDark = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: AppColors.blueDark,
+  );
   static final TextStyle medium18grey = GoogleFonts.poppins(
     fontSize: 18,
     fontWeight: FontWeight.w500,

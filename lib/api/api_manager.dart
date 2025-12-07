@@ -1,13 +1,17 @@
 import 'dart:convert';
 
-import 'package:graduation_project/api/api_contant.dart';
+import 'package:graduation_project/api/api_constant.dart';
 
 import 'package:http/http.dart' as http;
 
 import '../model/CategoriesModel.dart';
+import '../model/FavouraiteItemModel.dart';
 import '../model/ProductModel.dart';
 
 class ApiManager {
+  static List<FavouraitesItemDTO> favouriteItems = [];
+
+
   static Future<CategoriesModel?> getCategories() async {
     Uri url = Uri.http(ApiConstant.baseUrl, ApiConstant.endPointCategories);
     try {
@@ -21,7 +25,7 @@ class ApiManager {
   }
 
   //GetAllProdutcs?Priority=2
-  static Future<ProductModel?> getEveryDayNeeds() async {
+  static Future<ProductModel?> getEveryDayNeedsProducts() async {
     Uri url = Uri.http(ApiConstant.baseUrl, ApiConstant.endPointAllProduct, {
       "Priority": "2",
     });
@@ -37,7 +41,7 @@ class ApiManager {
 
   static Future<ProductModel?> getProductByCategoryId(Category category) async {
     Uri Url = Uri.http(ApiConstant.baseUrl, ApiConstant.endPointAllProduct, {
-      "CategoryId": category.id.toString(),
+      "CategoryId": "${category.id}",
     });
     try {
       var response = await http.get(Url);
@@ -60,4 +64,29 @@ class ApiManager {
       throw e;
     }
   }
+
+  static Future<bool> createOrUpdateFavourites(FavouraitesDTO dto) async {
+
+    final url = Uri.parse('http://10.0.2.2:5044/CreateOrUpdateFavouraites');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(dto.toJson()),
+      );
+
+      if (response.statusCode == 200) {
+        print('Success: ${response.body}');
+        return true;
+      } else {
+        print('Error: ${response.statusCode} - ${response.body}');
+        return false;
+      }
+    } catch (e) {
+      print('Exception: $e');
+      return false;
+    }
+  }
+
 }

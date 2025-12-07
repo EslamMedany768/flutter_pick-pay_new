@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/utils/app_colors.dart';
 import 'package:graduation_project/widgets/custom_elevated_button.dart';
-import 'package:graduation_project/widgets/text_formfiled_auth.dart';
+import 'package:graduation_project/auth/widget/text_formfiled_auth.dart';
 
 import '../ui/home.dart';
 import '../ui/tabs/home_tab/home_tab.dart';

@@ -1,19 +1,18 @@
 class ProductModel {
-  ProductModel({
-      this.status, 
-      this.products,});
+  ProductModel({this.status, this.products});
 
   ProductModel.fromJson(dynamic json) {
     status = json['status'];
     if (json['products'] != null) {
       products = [];
       json['products'].forEach((v) {
-        products?.add(Products.fromJson(v));
+        products?.add(Product.fromJson(v));
       });
     }
   }
+
   String? status;
-  List<Products>? products;
+  List<Product>? products;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -23,20 +22,21 @@ class ProductModel {
     }
     return map;
   }
-
 }
 
-class Products {
-  Products({
-      this.id, 
-      this.name, 
-      this.weight, 
-      this.pictureUrl, 
-      this.price, 
-      this.currentStock, 
-      this.categoryId,});
+class Product {
+  Product({
+    this.id,
+    this.name,
+    this.weight,
+    this.pictureUrl,
+    this.price,
+    this.currentStock,
+    this.categoryId,
+    this.isFav = false, // 👈 اضفناه هنا
+  });
 
-  Products.fromJson(dynamic json) {
+  Product.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
     weight = json['weight'];
@@ -44,7 +44,9 @@ class Products {
     price = json['price'];
     currentStock = json['currentStock'];
     categoryId = json['categoryId'];
+    // isFav لا نقرأه من JSON
   }
+
   int? id;
   String? name;
   double? weight;
@@ -52,6 +54,8 @@ class Products {
   double? price;
   int? currentStock;
   int? categoryId;
+
+  bool isFav = false; // 👈 متغير جديد للواجهة فقط
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -62,7 +66,7 @@ class Products {
     map['price'] = price;
     map['currentStock'] = currentStock;
     map['categoryId'] = categoryId;
+    // isFav مش هيتبعت
     return map;
   }
-
 }

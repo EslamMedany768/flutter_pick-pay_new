@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/auth/login_screen.dart';
 import 'package:graduation_project/auth/register_screen.dart';
-import 'package:graduation_project/ui/WishListScreen.dart';
+import 'package:graduation_project/ui/wishList/WishListScreen.dart';
 import 'package:graduation_project/ui/home.dart';
-import 'package:graduation_project/ui/tabs/category_tab/product_details_screen/onProductDetailsClicked.dart';
-import 'package:graduation_project/ui/tabs/home_tab/CategoryHomeScreen/categories_details.dart';
+import 'package:graduation_project/ui/tabs/widgets/ProductDetailsScreen(whenProductClicked).dart';
+import 'package:graduation_project/ui/tabs/home_tab/CategoryHomeScreen/categoriesScreenDetails.dart';
 import 'package:graduation_project/ui/tabs/home_tab/home_tab.dart';
 
 void main() {
@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
         RegisterScreen.routeName: (context) => RegisterScreen(),
         HomeTab.routeName:(context)=>HomeTab(),
         HomeScreen.routeName:(context)=>HomeScreen(),
-        ProductDetails.routeName:(context)=>ProductDetails(),
+        ProductDetailsScreen.routeName:(context)=>ProductDetailsScreen(),
         WishListScreen.routeName:(context)=>WishListScreen(),
-        CategoriesDetails.routeName:(context)=>CategoriesDetails(),
+        CategoriesScreenDetails.routeName:(context)=>CategoriesScreenDetails(),
       },
     );
   }

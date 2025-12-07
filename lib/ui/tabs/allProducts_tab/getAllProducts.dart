@@ -4,15 +4,16 @@ import 'package:graduation_project/model/ProductModel.dart';
 import 'package:graduation_project/utils/app_colors.dart';
 import 'package:graduation_project/utils/app_styles.dart';
 
-import '../home_tab/EveryDayNeedsProduct/productCardwidget.dart';
+import '../widgets/productCardwidget.dart';
 
-class Getallproducts extends StatefulWidget {
-  const Getallproducts({super.key});
+class GetAllproducts extends StatefulWidget {
+  const GetAllproducts({super.key});
+
   @override
-  State<Getallproducts> createState() => _GetallproductsState();
+  State<GetAllproducts> createState() => _GetAllproductsState();
 }
 
-class _GetallproductsState extends State<Getallproducts> {
+class _GetAllproductsState extends State<GetAllproducts> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -36,19 +37,19 @@ class _GetallproductsState extends State<Getallproducts> {
             ],
           );
         }
-        List<Products?> productsList = snapshot.data!.products!;
+        List<Product?> productsList = snapshot.data!.products!;
         return Expanded(
           child: GridView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 12),
             itemCount: productsList.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisSpacing: 14,
+              crossAxisSpacing: 14,
               crossAxisCount: 2,
-              childAspectRatio: 0.5,
+              childAspectRatio: 1 / 1.45,
             ),
             itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.only(bottom: 14, left: 14),
-                child: productCardWidget(product: productsList[index]!),
-              );
+              return productCardWidget(product: productsList[index]!);
             },
           ),
         );

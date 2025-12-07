@@ -1,9 +1,9 @@
 // import 'package:flutter/material.dart';
-// import 'package:graduation_project/ui/tabs/category_tab/model/product_model.dart';
+// import 'package:graduation_project/ui/tabs/allProducts_tab/model/product_model.dart';
 // import 'package:graduation_project/utils/app_colors.dart';
 // import 'package:graduation_project/utils/app_styles.dart';
 //
-// import '../category_tab/product_details_screen/add_or_remove_button.dart';
+// import '../allProducts_tab/product_details_screen/add_or_remove_button.dart';
 //
 // class RectangleCardWidget extends StatelessWidget {
 //   ProductModel product;

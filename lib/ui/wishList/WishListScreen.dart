@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/ui/tabs/category_tab/category_screen_tab.dart';
 import 'package:graduation_project/ui/tabs/favourite_tab/rectangle_cardWidget.dart';
 import 'package:graduation_project/utils/app_colors.dart';
 import 'package:graduation_project/utils/app_styles.dart';
