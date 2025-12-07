@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/ui/tabs/favourite_tab/rectangle_cardWidget.dart';
-import 'package:graduation_project/utils/app_colors.dart';
-import 'package:graduation_project/utils/app_styles.dart';
+import 'package:graduation_project/api/api_manager.dart';
+import 'package:graduation_project/model/WishlistModel.dart';
+import 'WishlistCardWidget.dart';
 
 class WishListScreen extends StatelessWidget {
   static const String routeName = "wishListScreen";
+
+  final String wishlistId = "12345"; // هتها من login أو storage
 
   WishListScreen({super.key});
 
@@ -12,20 +14,36 @@ class WishListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.blue),
-        title: Text("Wishlist", style: AppStyles.medium20blueDark),
+        title: Text("Wishlist"),
         centerTitle: true,
       ),
-      // body: ListView.builder(
-      //   padding: EdgeInsets.symmetric(horizontal: 13, vertical: 30),
-      //   itemCount: CategoryTab.productList.length,
-      //   itemBuilder: (context, index) {
-      //     return RectangleCardWidget(
-      //       product: CategoryTab.productList[index],
-      //       inWishList: true,
-      //     );
-      //   },
-      // ),
+      body: FutureBuilder<WishlistDTO?>(
+        future: ApiManager.getWishlistById(wishlistId),
+        builder: (context, snapshot) {
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return Center(child: Text("Error loading wishlist"));
+          }
+
+          var wishlist = snapshot.data;
+
+          if (wishlist == null || wishlist.items == null || wishlist.items!.isEmpty) {
+            return Center(child: Text("No items in wishlist"));
+          }
+
+          return ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 13, vertical: 30),
+            itemCount: wishlist.items!.length,
+            itemBuilder: (context, index) {
+              return WishlistCardWidget(item: wishlist.items![index]);
+            },
+          );
+        },
+      ),
     );
   }
 }

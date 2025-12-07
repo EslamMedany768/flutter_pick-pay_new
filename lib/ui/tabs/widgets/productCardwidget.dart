@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/api/api_manager.dart';
+import 'package:graduation_project/model/ProductUpdateModel.dart';
+import 'package:graduation_project/model/WishlistModel.dart';
 import 'package:graduation_project/ui/tabs/widgets/ProductDetailsScreen(whenProductClicked).dart';
 
 import '../../../model/FavouraiteItemModel.dart';
@@ -72,11 +74,21 @@ class _productCardWidgetState extends State<productCardWidget> {
                         ApiManager.favouriteItems.removeWhere(
                           (item) => item.id == productItem.id,
                         );
+
                       } else {
                         // ADD
                         ApiManager.favouriteItems.add(productItem);
                       }
+                      widget.product.isFav = !widget.product.isFav;
+                      // we need tto update the product
+                      ProductToUpdateDTO productToUpdate = ProductToUpdateDTO(
+                        isFav: widget.product.isFav,
+                        name: widget.product.name,
+                        price: widget.product.price,
+                        currentStock: widget.product.currentStock
+                      );
 
+                      await ApiManager.UpdateProduct(productToUpdate, widget.product.id);
                       var dto = FavouraitesDTO(
                         id: "1234",
                         items: ApiManager.favouriteItems,
@@ -84,11 +96,10 @@ class _productCardWidgetState extends State<productCardWidget> {
 
                       bool success = await ApiManager.createOrUpdateFavourites(
                         dto,
-                      );
+                      ) ;
 
                       if (success) {
                         setState(() {
-                          widget.product.isFav = !widget.product.isFav;
                         });
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -128,7 +139,34 @@ class _productCardWidgetState extends State<productCardWidget> {
                   height: height * 0.04,
                   child: IconButton(
                     padding: EdgeInsets.zero,
-                    onPressed: () {},
+                    onPressed: () async {
+                      WishlistItemDTO wishlistItem = WishlistItemDTO(
+                        id: widget.product.id!,
+                        name: widget.product.name!,
+                        pictureUrl: widget.product.pictureUrl!,
+                        price: widget.product.price!,
+                        quantity: 1
+                      );
+
+                      ApiManager.wishlistItems.add(wishlistItem);
+
+                      var wishlist = new WishlistDTO(id: "12345", items: ApiManager.wishlistItems);
+
+                      bool success = await ApiManager.createOrUpdateWishlist(
+                        wishlist,
+                      ) ;
+
+                      if (success) {
+                        setState(() {
+                        });
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Failed to update wishlist"),
+                          ),
+                        );
+                      }
+                    },
                     icon: Icon(
                       Icons.add_circle,
                       color: AppColors.blue,

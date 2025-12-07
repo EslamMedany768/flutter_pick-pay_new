@@ -12,6 +12,16 @@ class FavouraitesDTO {
       'Items': items.map((e) => e.toJson()).toList(),
     };
   }
+  factory FavouraitesDTO.fromJson(Map<String, dynamic> json) {
+    return FavouraitesDTO(
+      status: json['status'] ?? "Ok",
+      id: json['id'].toString(),
+      items: (json['items'] as List)
+          .map((e) => FavouraitesItemDTO.fromJson(e))
+          .toList(),
+    );
+  }
+
 }
 
 class FavouraitesItemDTO {
@@ -38,4 +48,14 @@ class FavouraitesItemDTO {
       'IsFav': IsFav,
     };
   }
+  factory FavouraitesItemDTO.fromJson(Map<String, dynamic> json) {
+    return FavouraitesItemDTO(
+      id: json['id'],
+      name: json['name'],
+      pictureUrl: json['pictureUrl'],
+      price: (json['price'] as num).toDouble(),
+      IsFav: json['isFav'] ?? false,
+    );
+  }
+
 }
