@@ -21,32 +21,34 @@ class ProfileTab extends StatelessWidget {
           ],
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Your full name", style: AppStyles.medium16blueDark),
-            SizedBox(height: height * 0.015),
-            Customformfiledwithlabel(lable: "Mohamed Mohamed Nabil"),
-            ///////////////////////////////////////////////////////////////////
-            SizedBox(height: height * 0.02),
-            Text("Your E-mail", style: AppStyles.medium16blueDark),
-            SizedBox(height: height * 0.015),
-            Customformfiledwithlabel(lable: "mohamed.N@gmail.com"),
-            ///////////////////////////////////////////////////////////////////
-            SizedBox(height: height * 0.02),
-            Text("Your password", style: AppStyles.medium16blueDark),
-            SizedBox(height: height * 0.015),
-            Customformfiledwithlabel(
-              lable: "**********************",
-              isObsecure: true,
-            ),
-            SizedBox(height: height * 0.02),
-            Text("Your mobile number", style: AppStyles.medium16blueDark),
-            SizedBox(height: height * 0.015),
-            Customformfiledwithlabel(lable: "01122118855"),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Your full name", style: AppStyles.medium16blueDark),
+              SizedBox(height: height * 0.015),
+              Customformfiledwithlabel(lable: "Mohamed Mohamed Nabil"),
+              ///////////////////////////////////////////////////////////////////
+              SizedBox(height: height * 0.02),
+              Text("Your E-mail", style: AppStyles.medium16blueDark),
+              SizedBox(height: height * 0.015),
+              Customformfiledwithlabel(lable: "mohamed.N@gmail.com"),
+              ///////////////////////////////////////////////////////////////////
+              SizedBox(height: height * 0.02),
+              Text("Your password", style: AppStyles.medium16blueDark),
+              SizedBox(height: height * 0.015),
+              Customformfiledwithlabel(
+                lable: "**********************",
+                isObsecure: true,
+              ),
+              SizedBox(height: height * 0.02),
+              Text("Your mobile number", style: AppStyles.medium16blueDark),
+              SizedBox(height: height * 0.015),
+              Customformfiledwithlabel(lable: "01122118855"),
+            ],
+          ),
         ),
       ),
     );

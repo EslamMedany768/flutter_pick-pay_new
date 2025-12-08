@@ -44,24 +44,20 @@ class _RectangleCardWidgetState extends State<RectangleCardWidget> {
               children: [
                 Container(
                   constraints: BoxConstraints(maxWidth: width * 0.3),
-                  child: Expanded(
-                    child: Text(
-                      maxLines: 2,
-                      overflow: TextOverflow.visible,
-                      widget.item.name!,
-                      style: TextStyle(fontSize: 16),
-                    ),
+                  child: Text(
+                    maxLines: 2,
+                    overflow: TextOverflow.visible,
+                    widget.item.name!,
+                    style: TextStyle(fontSize: 16),
                   ),
                 ),
                 Container(
                   constraints: BoxConstraints(maxWidth: width * 0.5),
-                  child: Expanded(
-                    child: Text(
-                      maxLines: 2,
-                      overflow: TextOverflow.visible,
-                      "EGP ${widget.item.price}",
-                      style: TextStyle(fontSize: 16),
-                    ),
+                  child: Text(
+                    maxLines: 2,
+                    overflow: TextOverflow.visible,
+                    "EGP ${widget.item.price}",
+                    style: TextStyle(fontSize: 16),
                   ),
                 ),
               ],
