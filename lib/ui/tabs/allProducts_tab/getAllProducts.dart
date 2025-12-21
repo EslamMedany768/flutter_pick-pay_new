@@ -38,20 +38,18 @@ class _GetAllproductsState extends State<GetAllproducts> {
           );
         }
         List<Product?> productsList = snapshot.data!.products!;
-        return Expanded(
-          child: GridView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            itemCount: productsList.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              mainAxisSpacing: 14,
-              crossAxisSpacing: 14,
-              crossAxisCount: 2,
-              childAspectRatio: 1 / 1.45,
-            ),
-            itemBuilder: (context, index) {
-              return productCardWidget(product: productsList[index]!);
-            },
+        return GridView.builder(
+          padding: EdgeInsets.symmetric(horizontal: 12),
+          itemCount: productsList.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            mainAxisSpacing: 14,
+            crossAxisSpacing: 14,
+            crossAxisCount: 2,
+            childAspectRatio: 1 / 1.45,
           ),
+          itemBuilder: (context, index) {
+            return productCardWidget(product: productsList[index]!);
+          },
         );
       },
     );

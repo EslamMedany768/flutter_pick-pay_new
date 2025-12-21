@@ -120,7 +120,7 @@ class _productCardWidgetState extends State<productCardWidget> {
             Expanded(
               child: Text(
                 maxLines: 2,
-
+                overflow: TextOverflow.visible,
                 widget.product.name ?? "",
                 style: AppStyles.medium18blueDark,
               ),

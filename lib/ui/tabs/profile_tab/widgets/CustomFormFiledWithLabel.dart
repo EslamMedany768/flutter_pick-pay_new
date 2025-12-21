@@ -23,8 +23,8 @@ class Customformfiledwithlabel extends StatelessWidget {
         fontSize: 16,
       ),
       decoration: InputDecoration(
-        labelText: lable,
-        labelStyle: AppStyles.medium16blueDark,
+        hintText: lable,
+        hintStyle: AppStyles.medium16blueDark,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
           borderSide: BorderSide(color: AppColors.blue),
