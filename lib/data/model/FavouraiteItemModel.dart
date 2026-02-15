@@ -25,15 +25,15 @@ class FavouraitesDTO {
 }
 
 class FavouraitesItemDTO {
-  final int id;
+  final int productId;
   final String name;
   final String pictureUrl;
   final double price;
-  bool IsFav;
+
 
   FavouraitesItemDTO({
-    required this.id,
-    this.IsFav = false,
+    required this.productId,
+
     required this.name,
     required this.pictureUrl,
     required this.price,
@@ -41,20 +41,20 @@ class FavouraitesItemDTO {
 
   Map<String, dynamic> toJson() {
     return {
-      'Id': id,
+      'productId': productId,
       'Name': name,
       'PictureUrl': pictureUrl,
       'Price': price,
-      'IsFav': IsFav,
+
     };
   }
   factory FavouraitesItemDTO.fromJson(Map<String, dynamic> json) {
     return FavouraitesItemDTO(
-      id: json['id'],
+      productId: json['productId'],
       name: json['name'],
       pictureUrl: json['pictureUrl'],
       price: (json['price'] as num).toDouble(),
-      IsFav: json['isFav'] ?? false,
+
     );
   }
 

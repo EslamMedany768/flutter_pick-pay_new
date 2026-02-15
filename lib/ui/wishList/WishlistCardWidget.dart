@@ -1,50 +1,103 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../../../model/WishlistModel.dart';
+import 'package:graduation_project/api/api_manager.dart';
+import 'package:graduation_project/utils/app_colors.dart';
+import '../../data/model/WishlistModel.dart';
 
-class WishlistCardWidget extends StatelessWidget {
+class WishlistCardWidget extends StatefulWidget {
   final WishlistItemDTO item;
+  final Function()? onDelete; // callback اختياري للتحديث من parent
 
-  const WishlistCardWidget({super.key, required this.item});
+  const WishlistCardWidget({super.key, required this.item, this.onDelete});
 
+  @override
+  State<WishlistCardWidget> createState() => _WishlistCardWidgetState();
+}
+
+class _WishlistCardWidgetState extends State<WishlistCardWidget> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    ApiManager apiManager = ApiManager();
 
-    return Container(height: height * 0.16,
-      margin: EdgeInsets.symmetric(vertical: 10),
+    return Container(
+      height: height * 0.16,
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.blue.withAlpha(80), width: 2),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
         children: [
-          Image.network(
-              width: width*0.28,
-              item.pictureUrl, fit: BoxFit.contain),
-
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                constraints: BoxConstraints(maxWidth: width * 0.5),
-                child: Text(
-                  maxLines: 2,
-                  overflow: TextOverflow.visible,
-                  item.name ?? "",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              Text("EGP ${item.price}", style: TextStyle(fontSize: 16)),
-            ],
+          // صورة المنتج
+          SizedBox(
+            width: width * 0.30,
+            child: CachedNetworkImage(
+              imageUrl: widget.item.pictureUrl,
+              fit: BoxFit.contain,
+              placeholder: (context, url) {
+                return Center(
+                  child: CircularProgressIndicator(color: AppColors.blue),
+                );
+              },
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
           ),
 
-          Spacer(),
+          const SizedBox(width: 8),
 
+          // النصوص
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.item.name ?? "",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 18),
+                ),
+                Text(
+                  "EGP ${widget.item.price.toStringAsFixed(2)}",
+                  style: const TextStyle(fontSize: 16),
+                ),
+                Text(
+                  "Quantity: ${widget.item.quantity}",
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+
+          // زر الحذف
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.delete, color: Colors.red),
+            onPressed: () async {
+              try {
+                await apiManager.deleteFromWishlist(
+                  userId: 1, // حط اليوزر الحقيقي
+                  productId: widget.item.productId!,
+                );
+
+                // إزالة العنصر من القائمة فوراً
+                if (widget.onDelete != null) {
+                  widget.onDelete!(); // callback للـ parent
+                }
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Item removed successfully")),
+                );
+              } catch (e) {
+                print("Delete error: $e");
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Failed to remove item")),
+                );
+              }
+            },
+            icon: const Icon(Icons.delete, color: Colors.red),
           ),
         ],
       ),

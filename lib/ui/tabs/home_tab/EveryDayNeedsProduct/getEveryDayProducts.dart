@@ -3,7 +3,8 @@ import 'package:graduation_project/api/api_manager.dart';
 import 'package:graduation_project/ui/tabs/widgets/productCardwidget.dart';
 import 'package:graduation_project/utils/app_colors.dart';
 
-import '../../../../model/ProductModel.dart';
+
+import '../../../../admin&tablet/admin/model/product_model.dart';
 import '../../../../utils/app_styles.dart';
 
 class getEveryDayProducts extends StatefulWidget {
@@ -14,12 +15,13 @@ class getEveryDayProducts extends StatefulWidget {
 }
 
 class _getEveryDayProductsState extends State<getEveryDayProducts> {
+  ApiManager apiManager =ApiManager();
   late Future<ProductModel?> getEveryDayNeeds;
 
   @override
   void initState() {
     // TODO: implement initState
-    getEveryDayNeeds = ApiManager.getEveryDayNeedsProducts();
+    getEveryDayNeeds = apiManager.getEveryDayNeedsProducts();
   }
 
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class _getEveryDayProductsState extends State<getEveryDayProducts> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    ApiManager.getEveryDayNeedsProducts(); // إعادة المحاولة
+                    apiManager.getEveryDayNeedsProducts(); // إعادة المحاولة
                   });
                 },
                 child: Text("Please try again", style: AppStyles.medium20blue),

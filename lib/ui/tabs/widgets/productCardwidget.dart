@@ -1,17 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/api/api_manager.dart';
-import 'package:graduation_project/model/ProductUpdateModel.dart';
-import 'package:graduation_project/model/WishlistModel.dart';
 import 'package:graduation_project/ui/tabs/widgets/ProductDetailsScreen(whenProductClicked).dart';
 
-import '../../../model/FavouraiteItemModel.dart';
-import '../../../model/ProductModel.dart';
+import '../../../admin&tablet/admin/model/product_model.dart';
+import '../../../data/model/FavouraiteItemModel.dart';
+import '../../../data/model/WishlistModel.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/app_styles.dart';
 
 class productCardWidget extends StatefulWidget {
-  Product product;
+  final Product product;
 
   productCardWidget({super.key, required this.product});
 
@@ -20,10 +19,20 @@ class productCardWidget extends StatefulWidget {
 }
 
 class _productCardWidgetState extends State<productCardWidget> {
+  List<FavouraitesItemDTO> favProductList = [];
+  ApiManager apiManager = ApiManager();
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+
+    // دالة لتحديد إذا المنتج موجود في المفضلات
+    bool isFavourite() {
+      return favProductList.any(
+              (item) => item.productId == widget.product.productId);
+    }
+
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -55,63 +64,48 @@ class _productCardWidgetState extends State<productCardWidget> {
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
-
                 Container(
                   width: width * 0.07,
                   height: height * 0.04,
                   child: IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () async {
-                      FavouraitesItemDTO productItem = FavouraitesItemDTO(
-                        id: widget.product.id!,
-                        name: widget.product.name!,
-                        pictureUrl: widget.product.pictureUrl!,
-                        price: widget.product.price!,
-                      );
-
-                      if (widget.product.isFav) {
-                        // DELETE
-                        ApiManager.favouriteItems.removeWhere(
-                          (item) => item.id == productItem.id,
+                      try {
+                        final response = await ApiManager.addToFavourites(
+                          favouritesId: 1,
+                          userId: 1,
+                          productId: widget.product.productId!.toInt(),
+                          pictureUrl: widget.product.pictureUrl!,
+                          price: widget.product.price!,
+                          name: widget.product.name!,
                         );
 
-                      } else {
-                        // ADD
-                        ApiManager.favouriteItems.add(productItem);
-                      }
-                      widget.product.isFav = !widget.product.isFav;
-                      // we need tto update the product
-                      ProductToUpdateDTO productToUpdate = ProductToUpdateDTO(
-                        isFav: widget.product.isFav,
-                        name: widget.product.name,
-                        price: widget.product.price,
-                        currentStock: widget.product.currentStock
-                      );
-
-                      await ApiManager.UpdateProduct(productToUpdate, widget.product.id);
-                      var dto = FavouraitesDTO(
-                        id: "1234",
-                        items: ApiManager.favouriteItems,
-                      );
-
-                      bool success = await ApiManager.createOrUpdateFavourites(
-                        dto,
-                      ) ;
-
-                      if (success) {
                         setState(() {
+                          favProductList = response['items']
+                              .map<FavouraitesItemDTO>(
+                                  (item) => FavouraitesItemDTO.fromJson(item))
+                              .toList();
                         });
-                      } else {
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text("Failed to update favourites"),
-                          ),
+                              content:
+                              Text('Favourite list updated successfully!')),
+                        );
+                      } catch (e) {
+                        print('Error: $e');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text('Failed to update favourites')),
                         );
                       }
                     },
-                    icon: widget.product.isFav
-                        ? Icon(Icons.favorite, color: AppColors.blue)
-                        : Icon(Icons.favorite_border, color: AppColors.blue),
+                    icon: Icon(
+                      isFavourite()
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: AppColors.blue,
+                    ),
                   ),
                 ),
               ],
@@ -119,9 +113,9 @@ class _productCardWidgetState extends State<productCardWidget> {
             SizedBox(height: height * 0.01),
             Expanded(
               child: Text(
-                maxLines: 2,
-                overflow: TextOverflow.visible,
                 widget.product.name ?? "",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: AppStyles.medium18blueDark,
               ),
             ),
@@ -133,39 +127,26 @@ class _productCardWidgetState extends State<productCardWidget> {
                   "EGP ${widget.product.price}",
                   style: AppStyles.medium18blueDark,
                 ),
-
                 SizedBox(
                   width: width * 0.07,
                   height: height * 0.04,
                   child: IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () async {
-                      WishlistItemDTO wishlistItem = WishlistItemDTO(
-                        id: widget.product.id!,
+                      WishlistItemDTO item = WishlistItemDTO(
+                        productId: widget.product.productId!,
                         name: widget.product.name!,
                         pictureUrl: widget.product.pictureUrl!,
                         price: widget.product.price!,
-                        quantity: 1
+                        quantity: 1,
                       );
 
-                      ApiManager.wishlistItems.add(wishlistItem);
+                      await apiManager.addItemToWishlist(item);
 
-                      var wishlist = new WishlistDTO(id: "12345", items: ApiManager.wishlistItems);
-
-                      bool success = await ApiManager.createOrUpdateWishlist(
-                        wishlist,
-                      ) ;
-
-                      if (success) {
-                        setState(() {
-                        });
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Failed to update wishlist"),
-                          ),
-                        );
-                      }
+                      setState(() {});
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Wishlist updated successfully")),
+                      );
                     },
                     icon: Icon(
                       Icons.add_circle,

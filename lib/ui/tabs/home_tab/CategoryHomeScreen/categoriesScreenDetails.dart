@@ -1,10 +1,10 @@
 ///هنا بعرض products علي حسب الid بتاع الcategory الي الuser اختارها
 
 import 'package:flutter/material.dart';
-import 'package:graduation_project/model/CategoriesModel.dart';
 import 'package:graduation_project/utils/app_colors.dart';
 import 'package:graduation_project/utils/app_styles.dart';
 
+import '../../../../data/model/CategoriesModel.dart';
 import 'getProductsByCategoryId.dart';
 
 class CategoriesScreenDetails extends StatelessWidget {

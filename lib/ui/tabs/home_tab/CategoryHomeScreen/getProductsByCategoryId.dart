@@ -2,13 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:graduation_project/api/api_manager.dart';
-import 'package:graduation_project/model/CategoriesModel.dart';
-import 'package:graduation_project/model/ProductModel.dart';
+
 import 'package:graduation_project/ui/tabs/home_tab/EveryDayNeedsProduct/getEveryDayProducts.dart';
 import 'package:graduation_project/ui/tabs/widgets/productCardwidget.dart';
 import 'package:graduation_project/utils/app_colors.dart';
 
+import '../../../../admin&tablet/admin/model/product_model.dart';
+import '../../../../data/model/CategoriesModel.dart';
+
 class GetProductsByCategoryId extends StatefulWidget {
+  ApiManager apiManager = ApiManager();
   Category? categorie;
 
   GetProductsByCategoryId({super.key, required this.categorie});
@@ -19,11 +22,13 @@ class GetProductsByCategoryId extends StatefulWidget {
 }
 
 class _GetProductsByCategoryIdState extends State<GetProductsByCategoryId> {
+  ApiManager apiManager = ApiManager();
+
   @override
   Widget build(BuildContext context) {
     widget.categorie = ModalRoute.of(context)!.settings.arguments as Category?;
     return FutureBuilder(
-      future: ApiManager.getProductByCategoryId(widget.categorie!),
+      future: apiManager.getProductByCategoryId(widget.categorie!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -35,7 +40,7 @@ class _GetProductsByCategoryIdState extends State<GetProductsByCategoryId> {
               Text("connection error"),
               ElevatedButton(
                 onPressed: () {
-                  ApiManager.getProductByCategoryId(widget.categorie!);
+                  apiManager.getProductByCategoryId(widget.categorie!);
                   setState(() {});
                 },
                 child: Text("try again"),
