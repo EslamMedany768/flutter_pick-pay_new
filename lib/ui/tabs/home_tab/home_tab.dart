@@ -4,9 +4,9 @@ import 'package:graduation_project/utils/app_colors.dart';
 import 'package:graduation_project/utils/app_styles.dart';
 
 import '../../../widgets/searchTextfiled.dart';
-import '../../../widgets/wishlist_icon.dart';
-import 'EveryDayNeedsProduct/getEveryDayProduct.dart';
-import 'EveryDayNeedsProduct/productCardwidget.dart';
+import '../../wishList/wishlist_icon.dart';
+import 'EveryDayNeedsProduct/getEveryDayProducts.dart';
+import '../widgets/productCardwidget.dart';
 import 'CategoryHomeScreen/getCategory.dart';
 
 class HomeTab extends StatefulWidget {
@@ -44,25 +44,12 @@ class _HomeTabState extends State<HomeTab> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: height * 0.04,
-        title: Text("Pick & Pay", style: AppStyles.extraBold24Blue),
-        centerTitle: true,
-      ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 16),
 
         child: ListView(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Searchtextfiled(hint: "what do you search for?"),
-                ),
-                SizedBox(width: width * 0.03),
-                WishlistIcon(),
-              ],
-            ),
+
             Stack(
               alignment: Alignment.bottomCenter,
               children: [
@@ -105,7 +92,7 @@ class _HomeTabState extends State<HomeTab> {
             SizedBox(
               height: height * 0.33,
               width: 0.4,
-              child: getProductcardwidget(),
+              child: getEveryDayProducts(),
             ),
           ],
         ),

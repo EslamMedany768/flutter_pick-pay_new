@@ -1,14 +1,16 @@
+///هنا بعرض products علي حسب الid بتاع الcategory الي الuser اختارها
+
 import 'package:flutter/material.dart';
-import 'package:graduation_project/model/CategoriesModel.dart';
 import 'package:graduation_project/utils/app_colors.dart';
 import 'package:graduation_project/utils/app_styles.dart';
 
-import 'getProductById.dart';
+import '../../../../data/model/CategoriesModel.dart';
+import 'getProductsByCategoryId.dart';
 
-class CategoriesDetails extends StatelessWidget {
+class CategoriesScreenDetails extends StatelessWidget {
   static const String routeName = "CategoriesDetails";
 
-  const CategoriesDetails({super.key});
+  const CategoriesScreenDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class CategoriesDetails extends StatelessWidget {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [Expanded(child: Getproductbyid(categorie: args))],
+        children: [Expanded(child: GetProductsByCategoryId(categorie: args))],
       ),
     );
   }

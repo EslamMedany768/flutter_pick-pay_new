@@ -1,36 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/api/api_manager.dart';
-import 'package:graduation_project/ui/tabs/home_tab/EveryDayNeedsProduct/productCardwidget.dart';
+import 'package:graduation_project/ui/tabs/widgets/productCardwidget.dart';
 import 'package:graduation_project/utils/app_colors.dart';
 
-import '../../../../model/ProductModel.dart';
+
+import '../../../../admin&tablet/admin/model/product_model.dart';
 import '../../../../utils/app_styles.dart';
 
-class getProductcardwidget extends StatefulWidget {
-  getProductcardwidget({super.key});
+class getEveryDayProducts extends StatefulWidget {
+  getEveryDayProducts({super.key});
 
   @override
-  State<getProductcardwidget> createState() => _getProductcardwidgetState();
+  State<getEveryDayProducts> createState() => _getEveryDayProductsState();
 }
 
-class _getProductcardwidgetState extends State<getProductcardwidget> {
+class _getEveryDayProductsState extends State<getEveryDayProducts> {
+  ApiManager apiManager =ApiManager();
   late Future<ProductModel?> getEveryDayNeeds;
 
   @override
   void initState() {
     // TODO: implement initState
-    getEveryDayNeeds = ApiManager.getEveryDayNeeds();
+    getEveryDayNeeds = apiManager.getEveryDayNeedsProducts();
   }
 
   Widget build(BuildContext context) {
-    var height = MediaQuery
-        .of(context)
-        .size
-        .height;
-    var width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return FutureBuilder<ProductModel?>(
       future: getEveryDayNeeds,
       builder: (context, snapshot) {
@@ -47,7 +43,7 @@ class _getProductcardwidgetState extends State<getProductcardwidget> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    ApiManager.getEveryDayNeeds(); // إعادة المحاولة
+                    apiManager.getEveryDayNeedsProducts(); // إعادة المحاولة
                   });
                 },
                 child: Text("Please try again", style: AppStyles.medium20blue),
@@ -55,16 +51,19 @@ class _getProductcardwidgetState extends State<getProductcardwidget> {
             ],
           );
         }
-        if (snapshot.data!.status != "ok") {
+        if (snapshot.data!.status != "Ok") {
           return Text("error");
         }
-        List<Products?> everyDayProductList = snapshot.data!.products!;
+        List<Product?> everyDayProductList = snapshot.data!.products!;
 
         return ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: everyDayProductList.length,
           itemBuilder: (context, index) {
-            return productCardWidget(product: everyDayProductList[index]!,);
+            return Container(
+              margin: EdgeInsets.only(right: 16),
+              child: productCardWidget(product: everyDayProductList[index]!),
+            );
           },
         );
       },

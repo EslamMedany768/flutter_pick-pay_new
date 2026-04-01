@@ -4,10 +4,10 @@ import 'package:graduation_project/ui/tabs/home_tab/home_tab.dart';
 import 'package:graduation_project/utils/app_colors.dart';
 import 'package:graduation_project/utils/app_styles.dart';
 
-import '../ui/home.dart';
+import '../ui/home_screen.dart';
 import '../widgets/custom_elevated_button.dart';
 import '../widgets/label_textForm.dart';
-import '../widgets/text_formfiled_auth.dart';
+import 'widget/text_formfiled_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = "login_screen";

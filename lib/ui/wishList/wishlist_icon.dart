@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/ui/WishListScreen.dart';
+import 'package:graduation_project/ui/wishList/WishListScreen.dart';
 
 class WishlistIcon extends StatelessWidget {
   const WishlistIcon({super.key});
@@ -16,7 +16,7 @@ class WishlistIcon extends StatelessWidget {
             Navigator.of(context).pushNamed(WishListScreen.routeName);
           },
           child: Image.asset(
-            width: width * 0.10,
+            width: width * 0.12,
             height: height * 0.09,
             "assets/images/wishlist_Icon.png",
             fit: BoxFit.cover,
