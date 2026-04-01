@@ -6,15 +6,17 @@ import 'package:graduation_project/admin&tablet/tablet/tablet_qrCode_screen.dart
 import 'package:graduation_project/admin&tablet/tablet/tablet_screen.dart';
 import 'package:graduation_project/auth/login_screen.dart';
 import 'package:graduation_project/auth/register_screen.dart';
-import 'package:graduation_project/ui/wishList/WishListScreen.dart';
-import 'package:graduation_project/ui/home_screen.dart';
-import 'package:graduation_project/ui/tabs/widgets/ProductDetailsScreen(whenProductClicked).dart';
-import 'package:graduation_project/ui/tabs/home_tab/CategoryHomeScreen/categoriesScreenDetails.dart';
-import 'package:graduation_project/ui/tabs/home_tab/home_tab.dart';
+import 'package:graduation_project/di/di.dart';
+
 
 import 'admin&tablet/admin/ui/add_screen/add_screen.dart';
+import 'features/ui/home_screen.dart';
+import 'features/ui/tabs/home_tab/CategoryHomeScreen/categoriesScreenDetails.dart';
+import 'features/ui/tabs/home_tab/home_tab.dart';
+import 'features/ui/wishList/WishListScreen.dart';
 
 void main() {
+  configureDependencies();
   runApp(MyApp());
 }
 
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
-      initialRoute: LoginScreen.routeName,
+      initialRoute: HomeScreen.routeName,
       routes: {
         DeleteScreen.routeName:(context)=>DeleteScreen(),
         AddScreen.routeName:(context)=>AddScreen(),
@@ -36,10 +38,10 @@ class MyApp extends StatelessWidget {
         RegisterScreen.routeName: (context) => RegisterScreen(),
         HomeTab.routeName: (context) => HomeTab(),
         HomeScreen.routeName: (context) => HomeScreen(),
-        ProductDetailsScreen.routeName: (context) => ProductDetailsScreen(),
+        // ProductDetailsScreen.routeName: (context) => ProductDetailsScreen(),
         WishListScreen.routeName: (context) => WishListScreen(),
-        CategoriesScreenDetails.routeName: (context) =>
-            CategoriesScreenDetails(),
+        // CategoriesScreenDetails.routeName: (context) =>
+        //     CategoriesScreenDetails(),
       },
     );
   }

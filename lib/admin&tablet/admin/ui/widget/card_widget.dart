@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/utils/app_colors.dart';
-import 'package:graduation_project/utils/app_styles.dart';
+
+
+import '../../../../Core/utils/app_colors.dart';
+import '../../../../Core/utils/app_styles.dart';
 
 class CardWidget extends StatelessWidget {
   String text;

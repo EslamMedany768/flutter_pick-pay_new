@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/auth/register_screen.dart';
-import 'package:graduation_project/ui/tabs/home_tab/home_tab.dart';
-import 'package:graduation_project/utils/app_colors.dart';
-import 'package:graduation_project/utils/app_styles.dart';
 
-import '../ui/home_screen.dart';
-import '../widgets/custom_elevated_button.dart';
-import '../widgets/label_textForm.dart';
+
+import '../Core/utils/app_colors.dart';
+import '../Core/utils/app_styles.dart';
+import '../features/ui/home_screen.dart';
+import '../features/widgets/custom_elevated_button.dart';
+import '../features/widgets/label_textForm.dart';
+
 import 'widget/text_formfiled_auth.dart';
 
 class LoginScreen extends StatefulWidget {

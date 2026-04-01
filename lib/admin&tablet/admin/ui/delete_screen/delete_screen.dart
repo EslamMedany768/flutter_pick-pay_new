@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/admin&tablet/admin/ui/widget/text_formfiled.dart';
-import 'package:graduation_project/utils/app_colors.dart';
-import 'package:graduation_project/utils/app_styles.dart';
+
+
+import '../../../../Core/utils/app_colors.dart';
+import '../../../../Core/utils/app_styles.dart';
 
 class DeleteScreen extends StatefulWidget {
   static const String routeName = "delete_Screen";
