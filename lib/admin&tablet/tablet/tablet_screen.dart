@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/utils/app_colors.dart';
+
+import '../../Core/utils/app_colors.dart';
 
 class TabletScreen extends StatelessWidget {
   static const String routeName ="tablet screen";
